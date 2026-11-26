@@ -1,0 +1,16 @@
+{
+  "acme foods": {
+    "price_band": [120, 126],
+    "lot_size": 118,
+    "open_date": "2026-12-02",
+    "close_date": "2026-12-04",
+    "exchange": "NSE, BSE"
+  },
+  "zenith solar": {
+    "price_band": [340, 358],
+    "lot_size": 41,
+    "open_date": "2026-12-08",
+    "close_date": "2026-12-10",
+    "exchange": "NSE, BSE"
+  }
+}
