@@ -1,8 +1,15 @@
 from google.adk.agents.llm_agent import Agent
+from google.adk.models.google_llm import Gemini
+from google.genai import types
 from .tools import calc_min_investment, get_ipo_basics
 
 root_agent = Agent(
-    model="gemini-3.5-flash",
+    model=Gemini(model="gemini-3.5-flash",
+        retry_options=types.HttpRetryOptions(
+            attempts=4,          # try up to 4 times
+            initial_delay=1,     # wait 1s, then longer each time
+            exp_base=2,          # exponential backoff: 1s, 2s, 4s
+        )),
     name='ipo_explainer',
     description='Explains Indian IPOs in simple language for first-time investors.',
     instruction="""
@@ -16,6 +23,8 @@ Rules:
 - Never tell the user to buy or sell. You explain; you don't advise.
 - Keep answers short: 3-5 sentences, no jargon, or explain jargon simply.
 """,
-    tools=[get_ipo_basics, calc_min_investment]
+    tools=[get_ipo_basics, calc_min_investment],
+    generate_content_config=types.GenerateContentConfig(
+        thinking_config=types.ThinkingConfig(thinking_level="low"),
+    ),
 )
-
